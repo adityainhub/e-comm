@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product-109B | Hannes & Co.</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/svg+xml" href="./images/header/favicon.svg">
+    <style>
+        .related-products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px 0;
+        }
+        
+        .footerChild2 {
+            flex: 0 0 auto;
+            margin-bottom: 20px;
+        }
+        .smallcontainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+        #related-products {
+            width: 100%; /* Ensure the related products container spans the full width */
+        }
+        .footerChild2 {
+            flex-basis: calc(25% - 20px); /* Adjust width for each related product */
+            margin-right: 20px;
+        }
+        .footerChild2:last-child {
+            margin-right: 0; /* Remove right margin from the last related product */
+        }
+    </style>
+</head>
+<body class="ohhh">
+<div class="header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a href="./index.html"><img src="./images/header/complogo.png" alt="comp" width="225px"></a>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="index.html">Home</a></li>
+                    <li class="nav-item"><a href="products.html">Products</a></li>
+                    <li class="nav-item"><a href="#footer">Contact Us</a></li>
+                    <li class="nav-item"><a href="account.html">Account</a></li>
+                </ul>
+            </nav>
+            <a href="./cart.html"><img class="cart" src="./images/header/cart.svg"></a>
+            <div class="toggle"><i class="fa fa-bars"></i></div>
+        </div>
+    </div>
+</div>
+<div class="small-container single-product">
+    <div class="child">
+        <div class="halfchild">
+            <img src="./images/products/product-5.webp" width="550px" height="500px" id="prodImg"><br><br><br>
+            <div class="small-img-child">
+                <div class="small-img-col">
+                    <img src="./images/products/product-13.webp" width="100%" class="small-img">
+                </div>
+                <div class="small-img-col">
+                    <img src="./images/products/product-12.webp" width="100%" class="small-img">
+                </div>
+                <div class="small-img-col">
+                    <img src="./images/products/product-6.webp" width="100%" class="small-img">
+                </div>
+                <div class="small-img-col">
+                    <img src="./images/products/product-15.webp" width="100%" class="small-img">
+                </div>
+            </div>
+        </div>
+        <div class="halfchild">
+            <p>Home / Products</p>
+            <h1>Jackets for Women</h1>
+            <h4>$109.00</h4>
+            <select>
+                <option disabled selected>Select Size</option>
+                <option>XXL</option>
+                <option>XL</option>
+                <option>L</option>
+                <option>M</option>
+                <option>S</option>
+            </select>
+            <input type="number" value="1">
+            <a href="./cart.html" class="btn">Add To Cart</a>
+            <h3>Product Details <i class="fa fa-indent"></i></h3>
+            <br>
+            <p>
+                Unleash your inner demons and go beyond what you can achieve. Try our slim fit wear
+                starting at only $109.99*
+            </p>
+        </div>
+    </div>
+</div>
+<div class="small-container">
+    <div class="child child-2">
+        <h2>Related Products</h2>
+        <div id="related-products" class="related-products">
+            <!-- Related products will be inserted here -->
+        </div>
+        <p><a href="./products.html">View More</a></p>
+    </div>
+</div>
+<div class="small-container">
+    <div class="child">
+        
+    </div>
+</div>
+<div class="footer" id="footer">
+    <div class="container">
+        <div class="child">
+            <div class="footerChild1">
+                <img src="./images/header/complogo.png">
+                <h4>Mail us at: <a href="mailto:hannes@hannesdev.xyz">hannesc@hannesdev.xyz</a></h4>
+            </div>
+            <div class="footerChild2">
+                <h3>Help</h3>
+                <ul>
+                    <li><a href="linkgoeshere">Payments</a></li>
+                    <li><a href="linkgoeshere">Shipping</a></li>
+                    <li><a href="linkgoeshere">Return Policy</a></li>
+                    <li ><a href="linkgoeshere">FAQ Topics</a></li>
+                </ul>
+            </div>
+            <div class="footerChild2">
+                <h3>Our Socials</h3>
+                <ul>
+                    <li><a href="linkgoeshere">Instagram</a></li>
+                    <li><a href="linkgoeshere">Facebook</a></li>
+                    <li><a href="linkgoeshere">Twitter</a></li>
+                    <li><a href="linkgoeshere">Linkedin</a></li>
+                </ul>
+            </div>
+            <div class="footerChild2">
+                <h3>Registered Office</h3>
+                <ul>
+                    <li>Apartment A13, Floor 15,</li>
+                    <li>Sunnyvale Park,</li>
+                    <li>Ilinois, CA.</li>
+                    <li>-</li>
+                </ul >
+            </div>
+        </div>
+        <div class="belowfooter">
+            &copy; Trends And Times, 2024 <br>
+            Ramish Jamal, All rights reserved.
+        </div>
+    </div>
+</div>
+<script>
+    // Define subCat variable outside the fetch block
+let subCat = '';
+function addToCart() {
+    const selectedStoreId = document.getElementById('storeDropdown').value;
+    if (!selectedStoreId || selectedStoreId === 'Select Store') {
+        // If no store is selected, do nothing
+        alert('Please select a store before adding the product to cart.');
+        return;
+    }
+    const productId = urlParams.get('id'); // Assuming you have this defined earlier
+        const storeId = document.getElementById('storeDropdown').value; // Get selected store ID
+        const quantity = document.querySelector('input[type="number"]').value; // Get quantity
+        const priceInStore = document.querySelector('.single-product h4').textContent.replace('$', ''); // Get price
+
+    // Construct the request body
+    const requestBody = {
+        productId: productId,
+        storeId: storeId,
+        quantity: quantity,
+        priceInStore: priceInStore
+    };
+
+    // Make the POST request to the API endpoint
+    fetch('http://localhost:3000/api/add-to-cart', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('jwtToken') // Assuming you have a function to retrieve the access token
+        },
+        body: JSON.stringify(requestBody)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        // Handle successful response
+        console.log('Product added to cart successfully.');
+        alert('Product added to cart successfully.');
+    })
+    .catch(error => {
+        console.error('Error adding product to cart:', error);
+    });
+}
+    // Attach event listener to the "Add to Cart" button
+    
+
+// Fetch product details from API
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get('id');
+const url = `http://localhost:3000/getProductDetails?productId=${productId}`;
+
+fetch(url)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(productDetails => {
+        // Update product details based on API response
+        document.querySelector('.single-product').innerHTML = `
+            <div class="child">
+                <div class="halfchild">
+                    <img src="${productDetails.IMAGEURL}" width="550px" height="500px" id="prodImg"><br><br><br>
+                    <div class="small-img-child">
+                        <!-- Small images content -->
+                    </div>
+                </div>
+                <div class="halfchild">
+                    <p>Home / Products</p>
+                    <h1>${productDetails.ItemName}</h1>
+                    <h4>$${productDetails.Price}</h4>
+                    <select id="storeDropdown">
+                        <option disabled selected>Select Store</option>
+                        <!-- Options will be inserted here dynamically -->
+                    </select>
+                    <input type="number" value="1">
+                    <a href="#" class="btn" id="addToCartBtn" onclick="addToCart()" disabled>Add To Cart</a>
+
+
+                    <h3>Product Details <i class="fa fa-indent"></i></h3>
+                    <br>
+                    <p>${productDetails.Descr}</p>
+                </div>
+            </div>`;
+        subCat = productDetails.ProductCategory; // Set subCat variable
+        fetch(`http://localhost:3000/productInStore?productId=${productId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(storeData => {
+            // Populate dropdown menu with store names and discount percentages
+            const storeDropdown = document.getElementById('storeDropdown');
+            storeData.forEach(store => {
+                const option = document.createElement('option');
+                option.value = store.StoreID;
+                option.textContent = `${store.StoreName} (${store.DiscountPercentage}% off)`;
+                storeDropdown.appendChild(option);
+            });
+
+            // Add event listener to update price based on selected store
+            storeDropdown.addEventListener('change', () => {
+    const selectedStoreId = storeDropdown.value;
+    const selectedStore = storeData.find(store => store.StoreID == selectedStoreId);
+    
+    if (selectedStore) {
+       
+        const originalPrice = parseFloat(`${productDetails.Price}`.replace('$', ''));
+        const discountPercentage = parseFloat(selectedStore.DiscountPercentage);
+       
+        const discountedPrice = originalPrice - (originalPrice * (discountPercentage / 100));
+        
+        document.querySelector('.single-product h4').textContent = `$${discountedPrice.toFixed(2)}`;
+    }
+});
+storeDropdown.addEventListener('change', () => {
+    const selectedStoreId = storeDropdown.value;
+    if (selectedStoreId) {
+        enableAddToCart(); // Enable the "Add to Cart" button if a store is selected
+    }
+});
+        })
+        .catch(error => {
+            console.error('Error fetching product availability:', error);
+        });
+    })
+    .then(() => {
+        // Fetch related products from API using the updated subCat value
+        const url2 = `http://localhost:3000/products/top4related?subcategory=${subCat}`;
+
+        fetch(url2)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(relatedProducts => {
+                // Update related products based on API response
+                const relatedProductsContainer = document.getElementById('related-products');
+                relatedProducts.forEach(product => {
+                    const productElement = `
+                        <div class="footerChild2">
+                            <img src="${product.IMAGEURL}">
+                            <h4>${product.ItemName}</h4>
+                            <div class="rating">
+                                ${generateStars(4)} <!-- Assuming you have a function to generate star rating -->
+                            </div>
+                            <p>$${product.Price}</p>
+                        </div>`;
+                    relatedProductsContainer.insertAdjacentHTML('beforeend', productElement);
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
+function generateStars(rating) {
+    rating = 4;
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 !== 0;
+    const starIcons = Array(fullStars).fill('<i class="fa fa-star"></i>');
+    if (halfStar) {
+        starIcons.push('<i class="fa fa-star-half-o"></i>');
+    }
+    const emptyStars = Array(5 - starIcons.length).fill('<i class="fa fa-star-o"></i>');
+    return starIcons.concat(emptyStars).join('');
+}
+function enableAddToCart() {
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    addToCartBtn.removeAttribute('disabled');
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trends and Times</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/svg+xml" href="./images/header/complogo.png">
+    <style>
+        /* Custom CSS styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('./images/header/headerprod.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .testimonialbox {
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <a href="./index.html"><img src="./images/header/complogo.png" alt="comp"></a>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li class="nav-item"><a href="index.html">Home</a></li>
+                        <li class="nav-item"><a href="products.html">Products</a></li>
+                        <li class="nav-item"><a href="#footer">Contact Us</a></li>
+                        <li class="nav-item"><a href="account.html">Account</a></li>
+                    </ul>
+                </nav>
+                <a href="./cart.html"><img class="cart" src="./images/header/cart.svg" alt="Cart"></a>
+                <div class="toggle"><i class="fa fa-bars"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="headerimg">
+        <h1>If you have everything under control, you're not moving fast enough!</h1>
+        <h3>Experience Fashion like you have never before. Try our Collection to feel like you have never before</h3>
+        <a href="products.html" class="btn">Explore Now &#8594;</a>
+    </div>
+    <div class="small-container">
+        <h2>Hot Releases</h2>
+        <div class="line1"></div>
+        <div id="hotReleases" class="child">
+            <!-- Hot releases content will be dynamically inserted here -->
+        </div>
+        <h2>Latest Releases</h2>
+        <div class="line1"></div>
+        <div id="latestReleases" class="child">
+            <!-- Latest releases content will be dynamically inserted here -->
+        </div>
+    </div>
+    <div class="more">
+        <a href="products.html">See More</a>
+    </div>
+    <div class="testimonial">
+        
+    </div>
+    <div class="footer" id="footer">
+        <div class="container">
+            <div class="child">
+                <div class="footerChild1">
+                    <div class="image-container">
+                        <img src="images/header/complogo.png" alt="Company Logo">
+                    </div>
+                    <h4>Mail us at: <a href="mailto:trendsandtimes@iiitd.ac.in">trendsandtimes@iiitd.ac.in</a></h4>
+                </div>
+                <div class="footerChild2">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="linkgoeshere">Payments</a></li>
+                        <li><a href="linkgoeshere">Shipping</a></li>
+                        <li><a href="linkgoeshere">Return Policy</a></li>
+                        <li><a href="linkgoeshere">FAQ Topics</a></li>
+                    </ul>
+                </div>
+                <div class="footerChild2">
+                    <h3>Our Socials</h3>
+                    <ul>
+                        <li><a href="linkgoeshere">Instagram</a></li>
+                        <li><a href="linkgoeshere">Facebook</a></li>
+                        <li><a href="linkgoeshere">Twitter</a></li>
+                        <li><a href="linkgoeshere">Linkedin</a></li>
+                    </ul>
+                </div>
+                <div class="footerChild2">
+                    <h3>Registered Office</h3>
+                    <ul>
+                        <li>IIITD,</li>
+                        <li>Okhla Phase 3,</li>
+                        <li>New Delhi-110025</li>
+                        <li>-</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="belowfooter">
+                &copy; Trends and Times, 2024 <br>
+                Ramish Jamal, All rights reserved.
+            </div>
+        </div>
+    </div>
+    <script>
+           // Function to generate star icons based on rating
+    function generateStars(rating) {
+        rating = 4;
+        const fullStars = Math.floor(rating);
+        const halfStar = rating % 1 !== 0;
+        const starIcons = Array(fullStars).fill('<i class="fa fa-star"></i>');
+        if (halfStar) {
+            starIcons.push('<i class="fa fa-star-half-o"></i>');
+        }
+        const emptyStars = Array(5 - starIcons.length).fill('<i class="fa fa-star-o"></i>');
+        return starIcons.concat(emptyStars).join('');
+    }
+
+    // Function to handle click on a product
+    function handleProductClick(productId) {
+        window.location.href = `./product_details.html?id=${productId}`;
+    }
+
+    // Fetch latest releases
+    fetch("http://localhost:3000/latestReleases") // Using relative URL
+        .then(response => response.json())
+        .then(data => {
+            const latestReleasesContainer = document.getElementById("latestReleases");
+            latestReleasesContainer.innerHTML = "";
+            data.forEach(product => {
+                const productElement = `
+                    <div class="childprods" onclick="handleProductClick(${product.ProductID})">
+                        <img src="${product.IMAGEURL}">
+                        <h4>${product.ItemName}</h4>
+                        <div class="rating">${generateStars(4)}</div>
+                        <p>₹${product.Price}</p>
+                    </div>`;
+                latestReleasesContainer.innerHTML += productElement;
+            });
+        })
+        .catch(error => console.error('Error fetching latest releases:', error));
+
+    // Fetch hot releases and inject into the hot releases container
+    fetch("http://localhost:3000/hotReleases") // Using relative URL
+        .then(response => response.json())
+        .then(data => {
+            const hotReleasesContainer = document.getElementById("hotReleases");
+            hotReleasesContainer.innerHTML = "";
+            data.forEach(product => {
+                const productElement = `
+                    <div class="childprods" onclick="handleProductClick(${product.ProductID})">
+                        <img src="${product.IMAGEURL}">
+                        <h4>${product.ItemName}</h4>
+                        <div class="rating">${generateStars(4)}</div>
+                        <p>₹${product.Price}</p>
+                    </div>`;
+                hotReleasesContainer.innerHTML += productElement;
+            });
+        })
+        .catch(error => console.error('Error fetching hot releases:', error));
+
+    // Fetch testimonials and inject into the testimonials container
+    fetch('http://localhost:3000/testimonials')
+        .then(response => response.text())
+        .then(html => {
+            document.querySelector('.testimonial').innerHTML = html;
+        })
+        .catch(error => console.error('Error fetching testimonials:', error));
+    </script>
+</body>
+</html>

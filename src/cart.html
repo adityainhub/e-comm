@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart | Trends And Times</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/svg+xml" href="./images/header/favicon.svg">
+    
+    <style> 
+    .container {
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Ensure relative positioning for the container */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.bottom-right {
+    margin-top: auto; /* Push the button to the bottom */
+    align-self: flex-end; /* Align the button to the right */
+    display: flex;
+    align-items: center; /* Align items vertically */
+}
+
+.place-order-container {
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px; /* Adjusted margin-top */
+    margin-bottom: 40px;
+    display: inline-flex;
+}
+
+.place-order-btn,
+.dropdown {
+    margin-left: 10px; /* Add margin between the button and the dropdown */
+}
+
+/* Dropdown menu styles */
+.dropdown {
+    position: relative;
+}
+
+.dropbtn {
+    background-color: #ff6347;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 8px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #ff4830;
+}
+
+.dropdown.selected .dropbtn {
+    background-color: #ff0000; /* Change background color of selected button */
+}
+
+.place-order-btn {
+    background-color: #ff6347; /* Red color for the button */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    padding: 15px 30px; /* Larger padding for bigger button */
+    cursor: pointer;
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.place-order-btn:hover {
+    background-color: #ff4830; /* Darker red color on hover */
+}
+
+.increment_d_button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Change button style on hover */
+.increment_d_button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: black;
+    color: white;
+}
+
+.cart-table th, .cart-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.cart-table th {
+    background-color: #f2f2f2;
+    color: black;
+}
+
+.cart-table img {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.delete-btn {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+    </style>
+</head>
+<body>
+    <img src="./images/header/headerprod.jpg" style="display: none;">
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <a href="index.html"><img src="./images/header/complogo.png" alt="comp" width="225px"></a>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li class="nav-item"><a href="index.html">Home</a></li>
+                        <li class="nav-item"><a href="products.html">Products</a></li>
+                        <li class="nav-item"><a href="#footer">Contact Us</a></li>
+                        <li class="nav-item"><a href="account.html">Account</a></li>
+                    </ul>
+                </nav>
+                <a href="cart.html"><img class="cart" src="./images/header/cart.svg"></a>
+                <div class="toggle"><i class="fa fa-bars"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="formPage">
+            <h2>You aren't logged in. You need an account to add items/view your cart.</h2>
+            <div class="btn"><a href="account.html">My Account</a></div>        
+        </div>
+        <div class="bottom-right">
+            
+            <div class="place-order-container">
+                <div class="dropdown" id="paymentDropdown">
+                    <button class="dropbtn">Select Payment</button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="selectPaymentOption('Credit Card')">Credit Card</a>
+                        <a href="#" onclick="selectPaymentOption('Debit Card')">Debit Card</a>
+                        <a href="#" onclick="selectPaymentOption('UPI')">UPI</a>
+                        <!-- Add more payment options as needed -->
+                    </div>
+                </div>
+                <button class="place-order-btn">Place Order</button>
+            </div>
+            
+        </div>
+       
+    </div>
+    <div class="footer" id="footer">
+        <div class="container">
+            <div class="child">
+                <div class="footerChild1">
+                    <img src="images/header/complogo.png">
+                    <h4>Mail us at: <a href="mailto:ramishjamal@gmail.com">ramishjamal@gmail.com</a></h4>
+                </div>
+                <div class="footerChild2">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="linkgoeshere">Payments</a></li>
+                        <li><a href="linkgoeshere">Shipping</a></li>
+                        <li><a href="linkgoeshere">Return Policy</a></li>
+                        <li><a href="linkgoeshere">FAQ Topics</a></li>
+                    </ul>
+                </div>
+                <div class="footerChild2">
+                    <h3>Our Socials</h3>
+                    <ul>
+                        <li><a href="linkgoeshere">Instagram</a></li>
+                        <li><a href="linkgoeshere">Facebook</a></li>
+                        <li><a href="linkgoeshere">Twitter</a></li>
+                        <li><a href="linkgoeshere">Linkedin</a></li>
+                    </ul>
+                </div>
+                <div class="footerChild2">
+                    <h3>Registered Office</h3>
+                    <ul>
+                        <li>Apartment A13, Floor 15,</li>
+                        <li>Sunnyvale Park,</li>
+                        <li>Ilinois, CA.</li>
+                        <li>-</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="belowfooter">
+                &copy;  Trends And Times,2024 <br>
+                Ramish Jamal, All rights reserved.
+            </div>
+        </div>
+    </div>
+   
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fetch cart details
+            // Fetch cart details with JWT token included
+           
+            fetch('http://localhost:3000/cart', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Render cart details on the page
+                renderCart(data);
+                
+            })
+            .catch(error => console.error('Error fetching cart details:', error));
+        });
+       
+        function renderCart(cartDetails) {
+            const cartContainer = document.querySelector('.formPage');
+
+            // Clear previous cart items
+            cartContainer.innerHTML = '';
+
+            // Check if cart has items
+            if (cartDetails && cartDetails.length > 0) {
+                // Create a table element
+                const table = document.createElement('table');
+                table.classList.add('cart-table');
+
+                // Create table header row
+                const headerRow = document.createElement('tr');
+                headerRow.innerHTML = `
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Product ID</th>
+                    <th>Store</th>
+                    <th>Store ID</th> 
+                    <th>Image</th>
+                    <th>Price Per Unit</th>
+                    <th>Action</th> <!-- Added delete button column -->
+                `;
+                table.appendChild(headerRow);
+
+                // Loop through each item in the cart
+                cartDetails.forEach(item => {
+                    
+                    // Create a table row for each item
+                    const row = document.createElement('tr');
+                                        // Populate table cells with item details
+                                       // Inside the loop in the renderCart function
+row.innerHTML = `
+    <td>${item.ItemName}</td>
+    <td>$${item.Price.toFixed(2)}</td>
+    <!-- Inside the table cell for quantity -->
+    <td>
+        <span id="quantity-${item.id}">${item.Quantity}</span>
+        <button class="increment_d_button" onclick="increaseQuantity(${item.id})">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
+                <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z"></path>
+                <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"></path>
+            </svg>
+        </button>
+        <button class="increment_d_button" onclick="decreaseQuantity(${item.id})">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                <path d="M4 8a.5.5 0 1 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"></path>
+            </svg>
+        </button>
+    </td>
+    <td class="item_id">${item.id}</td>
+    <td>${item.StoreName}</td>
+    <td>${item.StoreID}</td> <!-- Add StoreID here -->
+    <td><img src="${item.IMAGEURL}" alt="${item.ItemName}" class="cart-item-image"></td>
+    <td id="total">$${item.Price.toFixed(2)}</td>
+    <td><button class="delete-btn" onclick="deleteCartItem(${item.id})">Delete</button></td> <!-- Added delete button -->
+`;
+
+                    // Append the row to the table
+                    table.appendChild(row);
+                });
+
+                // Append the table to the cart container
+                cartContainer.appendChild(table);
+                getCartItems();
+            } else {
+                // If cart is empty, display a message
+                cartContainer.innerHTML = '<p>Your cart is empty</p>';
+            }
+        }
+        function deleteCartItem(itemId) {
+            // Implement delete cart item functionality here
+            // Send request to server to delete item with itemId
+            // After successful deletion, refresh cart or update UI accordingly
+            const storeIdCell = document.querySelector(`#quantity-${itemId}`).parentElement.nextElementSibling.nextElementSibling.nextElementSibling;
+            const storeId = storeIdCell.textContent;
+            const url ="http://localhost:3000/deleteFromCart?productId="+itemId+"&storeId="+storeId;
+            fetch(url, {
+                method: 'POST',
+                headers: {'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
+                    'Content-Type': 'application/json'}
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete item from cart');
+                }
+                console.log('Item deleted from cart successfully');
+                // Handle success if needed
+                window.location.reload();
+            })
+        }
+
+        // Inside the increaseQuantity and decreaseQuantity functions
+function increaseQuantity(itemId) {
+    
+    const quantitySpan = document.getElementById(`quantity-${itemId}`);
+    let quantity = parseInt(quantitySpan.textContent);
+    quantity += 1;
+    quantitySpan.textContent = quantity;
+
+    // Extract storeId from the table cell
+    const storeIdCell = document.querySelector(`#quantity-${itemId}`).parentElement.nextElementSibling.nextElementSibling.nextElementSibling;
+   
+    const storeId = storeIdCell.textContent;
+
+    // Update the quantity on the server
+    updateQuantityOnServer(itemId, quantity, storeId);
+}
+
+function decreaseQuantity(itemId) {
+    const quantitySpan = document.getElementById(`quantity-${itemId}`);
+    let quantity = parseInt(quantitySpan.textContent);
+    if (quantity > 1) {
+        quantity -= 1;
+        quantitySpan.textContent = quantity;
+
+        // Extract storeId from the table cell
+        const storeIdCell = document.querySelector(`#quantity-${itemId}`).parentElement.nextElementSibling.nextElementSibling.nextElementSibling;
+        const storeId = storeIdCell.textContent;
+
+        // Update the quantity on the server
+        updateQuantityOnServer(itemId, quantity, storeId);
+    }
+}
+
+        function updateQuantityOnServer(itemId, quantity, storeId) {
+            // Define the URL of your server endpoint for updating quantity
+            const url = `http://localhost:3000/api/cart/?productId=${itemId}&storeId=${storeId}`;
+
+            // Define the request body with the updated quantity
+            const requestBody = {
+                quantity: quantity
+            };
+
+            // Send a PUT request to update the quantity
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("jwtToken"),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to update quantity on the server');
+                }
+                console.log('Quantity updated successfully');
+                // Handle success if needed
+            })
+            .catch(error => {
+                console.error('Error updating quantity on the server:', error.message);
+                // Handle error
+            });
+        }
+        function selectPaymentOption(option) {
+            const dropdown = document.getElementById('paymentDropdown');
+            const dropbtn = dropdown.querySelector('.dropbtn');
+            dropbtn.textContent = option; // Set the button text to the selected option
+            dropdown.classList.add('selected'); // Apply selected style to the dropdown
+        }
+function getCartItems() {
+    const cartItems = [];
+    const tableRows = document.querySelectorAll('.cart-table  tr'); 
+    tableRows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        if (cells.length > 0) {
+            const item = {
+                ProductID: parseInt(cells[3].textContent), // Extract item ID from the fourth cell,
+                Quantity: parseInt(cells[2].querySelector('span').textContent), 
+                StoreID: parseInt(cells[5].textContent),
+                paymentMethod: document.getElementById('paymentDropdown').querySelector('.dropbtn').textContent,
+                AddressID:12,
+                Total:parseInt(cells[7].textContent.replace('$',''))*parseInt(cells[2].querySelector('span').textContent),
+                // Add other properties as needed
+            };
+            cartItems.push(item);
+        }
+    });
+
+    return cartItems;
+}
+document.querySelector('.place-order-btn').addEventListener('click', function() {
+    // Gather necessary data from form fields
+    const cartItems = getCartItems(); // Get the cart items using the getCartItems function
+
+    // Prepare the data to be sent in the request body
+    const requestBody = {
+        products: cartItems // Include the cart items in the request body
+    };
+    // Fetch the cart details with the authorization token included
+    fetch('http://localhost:3000/make-orders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem("jwtToken") // Include the authorization token
+        },
+        body: JSON.stringify(requestBody) // Include the data in the request body
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to place order');
+        }
+        console.log('Order placed successfully');
+        alert('Order placed successfully');
+        window.location.href = 'index.html'; // Redirect to the home page after placing the order
+        // Handle success if needed
+    })
+    .catch(error => {
+        console.error('Error placing order:', error.message);
+        // Handle error
+    });
+});
+
+    </script>
+</body>
+</html>

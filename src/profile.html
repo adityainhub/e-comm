@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account | Hannes & Co.</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/svg+xml" href="./images/header/favicon.svg">
+    <style>
+        /* Your custom CSS styles go here */
+        /* Add any additional styling or overrides */
+        /* CSS for your website */
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Body Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8; /* Updated background color */
+        }
+        
+        /* Header Styles */
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 100px;
+            height: auto;
+        }
+        
+        .nav-menu {
+            list-style-type: none;
+            display: flex;
+        }
+        
+        .nav-item {
+            margin-right: 20px;
+        }
+        
+        /* Form Styles */
+        .profilePage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 100px); /* Adjust for header height */
+        }
+        
+        .accountDetails {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #a17d7d; /* Updated background color */
+            border-radius: 10px;
+            width: 400px; /* Increased width for better alignment */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box shadow */
+        }
+        
+        .accountDetails h3 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .profilePage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 100px); /* Adjust for header height */
+}
+
+.accountDetails,
+.orders {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #a17d7d; /* Updated background color */
+    border-radius: 10px;
+    width: 400px; /* Increased width for better alignment */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box shadow */
+    text-align: center; /* Center align content */
+}
+
+/* Button Styles */
+.btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #555;
+}
+        
+        .accountDetails p {
+            margin-bottom: 10px;
+        }
+        
+        .orders {
+            padding: 20px;
+            background-color: #a17d7d; /* Updated background color */
+            border-radius: 10px;
+            width: 400px; /* Increased width for better alignment */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box shadow */
+        }
+        
+        .orders h3 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .orders div {
+            margin-bottom: 10px;
+        }
+        
+        /* Footer Styles */
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .child {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .footerChild1 img {
+            width: 150px;
+        }
+        
+        .footerChild2 {
+            flex: 1;
+        }
+        
+        .belowfooter {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .belowfooter p {
+            margin: 10px 0;
+        }
+
+        /* Button Styles */
+        .btn {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <a href="index.html"><img src="./images/header/complogo.png" alt="comp"></a>
+                </div>
+                <div class="toggle"><i class="fa fa-bars"></i></div>
+                <nav class="nav-menu">
+                    <ul>
+                        <li class="nav-item"><a href="index.html">Home</a></li>
+                        <li class="nav-item"><a href="products.html">Products</a></li>
+                        <li class="nav-item"><a href="#footer">Contact Us</a></li>
+                        <li class="nav-item"><a href="account.html">Account</a></li>
+                    </ul>
+                </nav>
+                <a href="cart.html"><img class="cart" src="./images/header/cart.svg"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profilePage">
+            <div class="accountDetails">
+                <h3>Account Details</h3>
+                <div id="accountInfo"></div>
+                <button onclick="editAccount()" class="btn">Edit Account</button>
+            </div>
+            <div class="orders">
+                <h3>Past Orders</h3>
+                <div id="pastOrders"></div>
+                <a href="myorders.html"><button  class="btn">My Orders</button></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer" id="footer">
+        <div class="container">
+            <div class="child">
+                <div class="footerChild1">
+                    <img src="./images/header/complogo.png">
+                    <h4>Mail us at: <a href="mailto:hannes@hannesdev.xyz">hannesc@hannesdev.xyz</a></h4>
+                </div>
+                <div class="footerChild2">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="linkgoeshere">Payments</a></li>
+                        <li><a href="linkgoeshere">Shipping</a></li>
+                        <li><a href="linkgoeshere">Return Policy</a></li>
+                        <li><a href="linkgoeshere">FAQ Topics</a></li>
+                    </ul>
+                </div>
+                <div class="footerChild2">
+                    <h3>Our Socials</h3>
+                    <ul>
+                        <li><a href="linkgoeshere">Instagram</a></li>
+                        <li><a href="linkgoeshere">Facebook</a></li>
+                        <li><a href="linkgoeshere">Twitter</a></li>
+                        <li><a href="linkgoeshere">Linkedin</a></li>
+                    </ul>
+                </div>
+                <div class="footerChild2">
+                    <h3>Registered Office</h3>
+                    <ul>
+                        <li>Apartment A13, Floor 15,</li>
+                        <li>Sunnyvale Park,</li>
+                        <li>Ilinois, CA.</li>
+                        <li>-</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="belowfooter">
+                &copy;  Trends And Times,2024 <br>
+                Ramish Jamal, All rights reserved.
+            </div>
+        </div>
+    </div>
+
+    <script>
+       
+        // Header adjustment for <768px
+        const toggle = document.querySelector(".toggle");
+        const menu = document.querySelector(".nav-menu");
+        function toggleMenu() {
+            if (menu.classList.contains("active")) {
+                menu.classList.remove("active");
+                // add hamburger icon
+                toggle.innerHTML = `<i class="fa fa-bars"></i>`;
+            }
+            else {
+                menu.classList.add("active");
+                // add X icon
+                toggle.innerHTML = `<i class="fa fa-times"></i>`;
+            }
+        }
+        toggle.addEventListener("click", toggleMenu, false);
+
+        
+
+        
+
+        // Function to navigate to the edit account page
+        function editAccount() {
+            // Redirect the user to the edit account page
+            window.location.href = 'edit_account.html';
+        }
+
+        // Fetch user data when the page loads
+        fetchUserData();
+
+        function fetchUserData() {
+            // Fetch user account information
+            fetch('http://localhost:3000/user/account', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
+    
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayAccountInfo(data); // Display user account information
+            })
+            .catch(error => {
+                console.error('Error fetching account details:', error);
+            });
+        }
+
+        // Function to display user account information
+        function displayAccountInfo(userInfo) {
+            const accountInfoDiv = document.getElementById('accountInfo');
+            accountInfoDiv.innerHTML = `
+                <p><strong>Name:</strong> ${userInfo.FirstName} ${userInfo.LastName}</p>
+                <p><strong>Email:</strong> ${userInfo.EmailAddress}</p>
+                <p><strong>Phone:</strong> ${userInfo.TelephoneNumber}</p>
+                <p><strong>Username:</strong> ${userInfo.Username}</p>
+                <!-- Add more account details as needed -->
+            `;
+        }
+    </script>
+
+</body>
+</html>

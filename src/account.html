@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account | Hannes & Co.</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/svg+xml" href="images/header/favicon.svg">
+    <style>
+        /* Your custom CSS styles go here */
+        /* Add any additional styling or overrides */
+
+        /* Form Styles */
+        .input-container {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .input-container input,
+        .input-container select {
+            width: calc(50% - 10px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .input-container input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .input-container label {
+            font-size: 14px;
+        }
+
+        .input-container button {
+            width: 100%;
+        }
+
+        .input-container small {
+            display: block;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        #successMessage {
+    margin-top: 20px; /* Adjust the margin as needed */
+    background-color: #dff0d8; /* Background color for success message */
+    border: 1px solid #c3e6cb; /* Border color */
+    border-radius: 5px; /* Border radius */
+    padding: 15px; /* Padding */
+}
+
+#successMessage h3 {
+    margin-bottom: 10px; /* Adjust margin as needed */
+    color: #28a745; /* Success message text color */
+}
+
+#successMessage p {
+    margin-bottom: 0; /* Remove default margin */
+    color: #333; /* Text color */
+}
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html"><img src="./images/header/complogo.png" alt="comp" width="225px"></a>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="index.html">Home</a></li>
+                    <li class="nav-item"><a href="products.html">Products</a></li>
+                    <li class="nav-item"><a href="#footer">Contact Us</a></li>
+                    <li class="nav-item"><a href="account.html">Account</a></li>
+                </ul>
+            </nav>
+            <a href="cart.html"><img class="cart" src="images/header/cart.svg"></a>
+            <div class="toggle"><i class="fa fa-bars"></i></div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="formPage">
+        <div class="btn" id="removeLog" onclick="login()">Existing User? Login</div>
+        <div class="btn" id="removeReg" onclick="register()">New User? Register</div>
+        <form class="showForm" id="loginForm">
+            <h3>Login</h3>
+            <input type="text" id="usernameLogin" placeholder="Username" required>
+            <input type="password" id="passwordLogin" placeholder="Password" required>
+            <button type="submit" class="btn">Login</button>
+            <a href="linkgoeshere">Forgot Password</a>
+        </form>
+        <form class="showForm" id="registerForm">
+            <h3>Register</h3>
+            <div class="input-container">
+                <input type="text" name="firstName" placeholder="First Name" required>
+                <input type="text" name="lastName" placeholder="Last Name" required>
+            </div>
+            <div class="input-container">
+                <input type="date" name="dob" placeholder="Date of Birth" required>
+                <input type="email" name="email" placeholder="E-mail" required>
+            </div>
+            <div class="input-container">
+                <input type="tel" name="phoneNumber" placeholder="Phone Number" required>
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+            <div class="input-container">
+                <input type="password" name="password" placeholder="Password" required>
+                <select name="chestSize" id="chestSize" required>
+                    <option value="" disabled selected>Select Chest Size</option>
+                    <option value="38">Small</option>
+                    <option value="48">Medium</option>
+                    <option value="56">Large</option>
+                </select>
+            </div>
+            <div class="input-container">
+                <select name="waistSize" id="waistSize" required>
+                    <option value="" disabled selected>Select Waist Size</option>
+                    <option value="28">28</option>
+                    <option value="30">30</option>
+                    <option value="32">32</option>
+                </select>
+                <select name="shoeSize" id="shoeSize" required>
+                    <option value="" disabled selected>Select Shoe Size</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+            </div>
+            <div class="input-container">
+                <input type="checkbox" id="termsCheckbox" required>
+                <label for="termsCheckbox">I agree to the following Terms and Conditions*</label>
+            </div>
+            <button type="submit" class="btn" id="registerButton" name="register">Register</button>
+            
+        </form>
+        <div id="successMessage" style="display: none;">
+            <h3>Registration Successful!</h3>
+            <p>Thank you for registering with us.</p>
+        </div>
+    </div>
+</div>
+<div class="footer" id="footer">
+    <div class="container">
+        <div class="child">
+            <div class="footerChild1">
+                <img src="./images/header/complogo.png">
+                <h4>Mail us at: <a href="mailto:hannes@hannesdev.xyz">hannesc@hannesdev.xyz</a></h4>
+            </div>
+            <div class="footerChild2">
+                <h3>Help</h3>
+                <ul>
+                    <li><a href="linkgoeshere">Payments</a></li>
+                    <li><a href="linkgoeshere">Shipping</a></li>
+                    <li><a href="linkgoeshere">Return Policy</a></li>
+                    <li><a href="linkgoeshere">FAQ Topics</a></li>
+                </ul>
+            </div>
+            <div class="footerChild2">
+                <h3>Our Socials</h3>
+                <ul>
+                    <li><a href="linkgoeshere">Instagram</a></li>
+                    <li><a href="linkgoeshere">Facebook</a></li>
+                    <li><a href="linkgoeshere">Twitter</a></li>
+                    <li><a href="linkgoeshere">Linkedin</a></li>
+                </ul>
+            </div>
+            <div class="footerChild2">
+                <h3>Registered Office</h3>
+                <ul>
+                    <li>Apartment A13, Floor 15,</li>
+                    <li>Sunnyvale Park,</li>
+                    <li>Ilinois, CA.</li>
+                    <li>-</li>
+                </ul>
+            </div>
+        </div>
+        <div class="belowfooter">
+            &copy;   Trends And Times,2024 <br>
+            Ramish Jamal, All rights reserved.
+        </div>
+    </div>
+</div>
+<script src="account.js"></script>
+<script>
+// Check if jwtToken exists in local storage
+// const jwtToken = localStorage.getItem('jwtToken');
+
+// // If jwtToken exists, make a request to server to verify it
+// if (jwtToken) {
+//     fetch('http://localhost:3000/verifyToken', {
+//         method: 'GET',
+//         headers: {
+//             'Authorization': 'Bearer ' + jwtToken
+//         }
+//     })
+//     .then(response => {
+//         if (response.ok) {
+//             // Token is valid, redirect to profile.html
+//             window.location.href = './profile.html';
+//         } else {
+//             // Token is invalid or expired
+//             console.error('Token verification failed');
+//             // Optionally, you can remove the invalid token from local storage
+//             localStorage.removeItem('jwtToken');
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Error during token verification:', error);
+//         alert('Please Login to continue.');
+//     });
+// }
+    // Account Page, hide and show elements when, and if required.
+    const logForm = document.getElementById("loginForm");
+    const regForm = document.getElementById("registerForm");
+    const remLog = document.getElementById("removeLog");
+    const remReg = document.getElementById("removeReg");
+    
+    
+    function login() {
+        remLog.style.display = "none";
+        remReg.style.display = "block";
+        logForm.style.display = "flex";
+        regForm.style.display = "none";
+    }
+    
+    function register() {
+        remReg.style.display = "none";
+        remLog.style.display = "block";
+        regForm.style.display = "flex";
+        logForm.style.display = "none";
+    }</script>
+</body>
+</html>

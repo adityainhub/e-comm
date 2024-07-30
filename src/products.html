@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Hannes & Co.</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/svg+xml" href="/images/products/product-1.webp">
+    <style>
+        /* .header {
+            
+        }
+
+        .brands {
+            
+        }
+
+        .small-container {
+           
+        } */
+
+        .childprods {
+            width: 23%; /* Adjusted width to accommodate 8 products per row */
+            display: inline-block;
+            margin: 10px;
+            vertical-align: top;
+            text-align: center;
+        }
+
+        .childprods img {
+            width: 100%;
+            height: auto;
+        }
+
+        .rating {
+            color: gold;
+        }
+
+        /* .footer {
+           
+        } */
+
+        #pagination {
+            margin-top: 20px;
+            text-align: center; /* Center align page selection numbers */
+        }
+
+        #pagination span,
+        #pagination a {
+            display: inline-block;
+            margin-right: 5px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            text-decoration: none;
+            color: #333;
+            cursor: pointer;
+        }
+
+        #pagination a.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<img src="./images/header/headerprod.jpg" style="display: none;">
+<div class="header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a href="index.html"><img src="./images/header/complogo.png" alt="comp" width="225px"></a>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="index.html">Home</a></li>
+                    <li class="nav-item"><a href="products.html">Products</a></li>
+                    <li class="nav-item"><a href="#footer">Contact Us</a></li>
+                    <li class="nav-item"><a href="account.html">Account</a></li>
+                </ul>
+            </nav>
+            <a href="cart.html"><img class="cart" src="./images/header/cart.svg"></a>
+            <div class="toggle"><i class="fa fa-bars"></i></div>
+        </div>
+    </div>
+</div>
+<div class="brands">
+    <div class="small-container">
+        <div class="child">
+            <div class="logo">
+                <img src="/images/products/product-1.webp">
+            </div>
+            <div class="logo">
+                <img src="/images/products/product-10.webp">
+            </div>
+            <div class="logo">
+                <img src="complogo.png">
+            </div>
+            <div class="logo">
+                <img src="/images/products/product-11.webp">
+            </div>
+            <div class="logo">
+                <img src="./images/logos/logo-puma.png">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="small-container">
+    <div class="child child-2">
+        <h2>Catalog</h2>
+        <select>
+            <option disabled selected>Sort By</option>
+            <option>Price</option>
+            <option>Popularity</option>
+            <option>Rating</option>
+        </select>
+    </div>
+    <div class="child">
+        <div id="products-list"></div>
+    </div>
+    <div id="pagination"></div>
+</div>
+<div class="footer" id="footer">
+    <div class="container">
+        <div class="child">
+            <div class="footerChild1">
+                <img src="complogo.png">
+                <h4>Mail us at: <a href="mailto:hannes@hannesdev.xyz">hannesc@hannesdev.xyz</a></h4>
+            </div>
+            <div class="footerChild2">
+                <h3>Help</h3>
+                <ul>
+                    <li><a href="linkgoeshere">Payments</a></li>
+                    <li><a href="linkgoeshere">Shipping</a></li>
+                    <li><a href="linkgoeshere">Return Policy</a></li>
+                    <li><a href="linkgoeshere">FAQ Topics</a></li>
+                </ul>
+            </div>
+            <div class="footerChild2">
+                <h3>Our Socials</h3>
+                <ul>
+                    <li><a href="linkgoeshere">Instagram</a></li>
+                    <li><a href="linkgoeshere">Facebook</a></li>
+                    <li><a href="linkgoeshere">Twitter</a></li>
+                    <li><a href="linkgoeshere">Linkedin</a></li>
+                </ul>
+            </div>
+            <div class="footerChild2">
+                <h3>Registered Office</h3>
+                <ul>
+                    <li>Apartment A13, Floor 15,</li>
+                    <li>Sunnyvale Park,</li>
+                    <li>Ilinois, CA.</li>
+                    <li>-</li>
+                </ul>
+            </div>
+        </div>
+        <div class="belowfooter">
+            &copy; Trends And Times,2024 <br>
+            Ramish Jamal, All rights reserved.
+        </div>
+    </div>
+</div>
+<script>
+   const productsPerPage = 8; // Updated to display 8 products per page
+let currentPage = 1;
+let products;
+
+fetch('http://localhost:3000/products') // Update URL to match your server endpoint
+    .then(response => response.json())
+    .then(data => {
+        products = data;
+        renderProducts(currentPage);
+        renderPagination();
+    })
+    .catch(error => console.error('Error fetching products:', error));
+
+function renderProducts(page) {
+    const productsList = document.getElementById('products-list');
+    productsList.innerHTML = '';
+
+    const startIndex = (page - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    const currentProducts = products.slice(startIndex, endIndex);
+
+    currentProducts.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.className = 'childprods'; // Assign class name
+        productElement.innerHTML = `
+            <a href="./product_details.html?id=${product.ProductID}"><img src="${product.IMAGEURL}"></a>
+            <h4>${product.ItemName}</h4>
+            <div class="rating">
+                ${renderStars(product.AverageRating)}
+            </div>
+            <p>₹${product.Price}</p>
+        `;
+        productsList.appendChild(productElement);
+    });
+}
+
+function renderStars(rating) {
+    if (rating === null) {
+        return 'Not rated yet';
+    }
+    const stars = [];
+    const filledStars = Math.floor(rating);
+    for (let i = 0; i < filledStars; i++) {
+        stars.push('<i class="fa fa-star"></i>');
+    }
+    if (rating - filledStars >= 0.5) {
+        stars.push('<i class="fa fa-star-half-o"></i>');
+    }
+    const emptyStars = 5 - stars.length;
+    for (let i = 0; i < emptyStars; i++) {
+        stars.push('<i class="fa fa-star-o"></i>');
+    }
+    return stars.join('');
+}
+
+function renderPagination() {
+    const pagination = document.getElementById('pagination');
+    pagination.innerHTML = '';
+
+    const totalPages = Math.ceil(products.length / productsPerPage);
+    for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.href = `#`; // Change href to "#" to prevent page reload
+        pageLink.textContent = i;
+        if (i === currentPage) {
+            pageLink.classList.add('active');
+        }
+        pageLink.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default behavior
+            currentPage = i;
+            renderProducts(currentPage);
+            updatePaginationActiveState(); // Update active state of pagination links
+        });
+        pagination.appendChild(pageLink);
+    }
+}
+
+// Function to update active state of pagination links
+function updatePaginationActiveState() {
+    const paginationLinks = document.querySelectorAll('#pagination a');
+    paginationLinks.forEach(link => {
+        const pageNumber = parseInt(link.textContent);
+        if (pageNumber === currentPage) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+}
+</script>
+</body>
+</html>
+

@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+
+<style>
+    /* Reset CSS */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .container {
+        display: flex;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 250px;
+        background-color: #343a40;
+        color: #fff;
+        padding-top: 20px;
+        position: fixed;
+        top: 0;
+        left: -250px;
+        height: 100%;
+        transition: left 0.3s ease;
+        z-index: 1; /* Ensure sidebar is above content */
+    }
+    
+    .sidebar.open {
+        left: 0;
+    }
+    
+    .toggle-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 2; /* Ensure toggle button is above sidebar */
+        color: #fff;
+        transition: color 0.3s ease; /* Add transition for color change */
+    }
+    
+    .toggle-btn.open {
+        color: #ffffff; /* Change color when sidebar is open */
+    }
+    
+    .content {
+        flex: 1;
+        padding: 20px;
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+    }
+    
+    .content.open {
+        margin-left: 250px;
+    }
+    
+    .header {
+        background-color: #343a40;
+        color: #fff;
+        padding: 15px 0;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .section {
+        margin-bottom: 30px;
+        display: none; /* Hide all sections initially */
+    }
+    
+    .section-header {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 10px;
+        display: none; /* Hide section headers initially */
+    }
+    
+    .sidebar-nav {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    .sidebar-nav-item {
+        padding: 15px 20px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    /* CSS adjustments to display store name, ID, stock, and discount percentage in the same line */
+    .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.checkbox-group label,
+.checkbox-group input[type="checkbox"],
+.checkbox-group input[type="number"] {
+    flex: 0 0 auto;
+    margin-right: 10px; /* Adjust the margin as needed */
+    margin-bottom: 10px; /* Add margin-bottom for space between options */
+}
+
+
+    .sidebar-nav-item:hover {
+        background-color: #495057;
+    }
+    
+    .sidebar-nav-item.active {
+        background-color: #495057;
+    }
+    .sidebar-header{
+        height: 50px;
+        width: 100%;
+        
+    }
+   /* Style for the table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 12px;
+    border-bottom: 1px solid #dee2e6;
+    text-align: left;
+}
+
+.table th {
+    background-color: #495057;
+    color: #fff;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.table tr:hover {
+    background-color: #e9ecef;
+}
+
+    
+    .form {
+        margin-bottom: 20px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-group label {
+        display: block;
+        font-weight: bold;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+    
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+        background-color: #0056b3;
+    }
+    
+    .footer {
+        background-color: #343a40;
+        color: #fff;
+        text-align: center;
+        padding: 15px 0;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+    }
+    /* CSS for the table */
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.order-table th, .order-table td {
+    padding: 12px;
+    border-bottom: 1px solid #dee2e6;
+    text-align: left;
+}
+
+.order-table th {
+    background-color: #495057;
+    color: #fff;
+}
+
+.order-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.order-table tr:hover {
+    background-color: #e9ecef;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.page-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 4px;
+    transition: background-color 0.3s;
+}
+
+.page-btn:hover {
+    background-color: #0056b3;
+}
+
+.page-btn.active {
+    background-color: #0056b3;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="toggle-btn" id="toggleBtn">&#9776;</div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            
+        </div>
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-item active" id="homepage">Homepage</li>
+            <li class="sidebar-nav-item" id="managestores">Manage Stores</li>
+            <li class="sidebar-nav-item" id="seesales">See Sales</li>
+            <li class="sidebar-nav-item" id="seeallorders">See All Orders</li>
+            <li class="sidebar-nav-item" id="seeallmanagers">See All Managers</li>
+            <li class="sidebar-nav-item" id="seeallcustomers">See All Customers</li>
+            <li class="sidebar-nav-item" id="adddeleteproducts">Add/Delete Products</li>
+            <!-- Add more sidebar items as needed -->
+        </ul>
+    </div>
+
+    <div class="content" id="content">
+        <div class="header">
+            Welcome to Admin Panel
+        </div>
+
+        <div class="section" id="homepage" style="display: block;">
+            <div class="section-header">Homepage</div>
+            <p>Welcome to the admin panel. Please select an option from the sidebar to get started.</p>
+        </div>
+
+        <div class="section" id="managestores">
+            <div class="section-header">Manage Stores</div>
+             <!-- Display available stores -->
+             <div class="section" id="availableStores">
+                <div class="section-header">Available Stores</div>
+                <table class="table" id="storesTable">
+                    <thead>
+                        <tr>
+                            <th>Store ID</th>
+                            <th>Store Name</th>
+                            <th>Manager ID</th>
+                            <th>Manager Name</th>
+                            <th>Store Rating</th>
+                        </tr>
+                        <!-- Add sample table data -->
+                        
+                    </thead>
+                    <tbody id="storesTableBody"></tbody>
+                </table>
+            </div>
+            <!-- Option to add a new store
+            <div class="form" id="addStoreForm">
+                <h2>Add New Store</h2>
+                <form id="addStoreFormElement">
+                    <div class="form-group">
+                        <label for="storeName">Store Name:</label>
+                        <input type="text" id="storeName" name="storeName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="managerID">Manager ID:</label>
+                        <input type="text" id="managerID" name="managerID" class="
+                        form-control" required>
+                    </div>
+                    <button type="button" class="btn" onclick="addStore()">Add Store</button>
+                </form>
+            </div>        
+        
+            Option to delete a store
+            <div class="form" id="deleteStoreForm">
+                <h2>Delete Store</h2>
+                <form id="deleteStoreFormElement">
+                    <div class="form-group">
+                        <label for="storeID">Store ID:</label>
+                        <input type="text" id="storeID" name="storeID" class="form-control" required>
+                    </div>
+                    <button type="button" class="btn" onclick="deleteStore()">Delete Store</button>
+                </form>
+            </div>
+    
+            Option to update store details
+            <div class="form" id="updateStoreForm">
+                <h2>Update Store Details</h2>
+                <form id="updateStoreFormElement">
+                    <div class="form-group">
+                        <label for="storeIDUpdate">Store ID:</label>
+                        <input type="text" id="storeIDUpdate" name="storeIDUpdate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newStoreName">New Store Name:</label>
+                        <input type="text" id="newStoreName" name="newStoreName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="newManagerID">New Manager ID:</label>
+                        <input type="text" id="newManagerID" name="newManagerID" class="form-control">
+                    </div>
+                    <button type="button" class="btn" onclick="updateStore()">Update Store</button>
+                </form>
+            </div> -->
+           
+        </div>
+    
+        <div class="section" id="seesales">
+            <div class="section-header">See Sales</div>
+            <!-- Your content for seeing sales -->
+        </div>
+    
+        <div class="section" id="seeallorders">
+            <div class="section-header">See All Orders</div>
+            <div class="order-list" id="orderList">
+                <!-- Order list will be dynamically populated here -->
+            </div>
+            <div class="pagination" id="pagination">
+                <!-- Pagination buttons will be dynamically populated here -->
+            </div>
+        </div>
+        
+    
+        <div class="section" id="seeallmanagers">
+            <div class="section-header">See All Managers</div>
+            <!-- Your content for seeing all managers -->
+            <p>Hello</p>
+        </div>
+    
+        <div class="section" id="seeallcustomers">
+            <div class="section-header">See All Customers</div>
+           
+        </div>
+    
+        <div class="section" id="adddeleteproducts">
+            <div class="section-header">Add/Delete Products</div>
+            <table class="table" id="productsTable">
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Item Name</th>
+                        <th>Brand</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTableBody"></tbody>
+            </table>
+        
+            <!-- Form to add a new product -->
+            <div class="form" id="addProductForm">
+<h2>Add New Product</h2>
+    <form id="addProductFormElement">
+        <div class="form-group">
+            <label for="itemName">Item Name:</label>
+            <input type="text" id="itemName" name="itemName" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="brand">Brand:</label>
+            <input type="text" id="brand" name="brand" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" class="form-control" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="imageUrl">Image URL:</label>
+            <input type="text" id="imageUrl" name="imageUrl" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" class="form-control" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="productCategory">Product Category:</label>
+            <input type="text" id="productCategory" name="productCategory" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="productSubCategory">Product Subcategory:</label>
+            <input type="text" id="productSubCategory" name="productSubCategory" class="form-control" required>
+        </div>
+        <!-- Inside the add store form -->
+<!-- Inside the add product form -->
+<div class="form-group">
+    <label for="availableStores1">Available Stores:</label>
+    <!-- Replace the select element with checkboxes -->
+    <div id="availableStores1" class="checkbox-group">
+        <!-- Options will be dynamically populated here -->
+    </div>
+</div>
+
+
+        <!-- Add more form fields as needed -->
+
+        <button type="button" class="btn" onclick="addProduct()">Add Product</button>
+                </form>
+            </div>
+        </div>
+        
+    </div> <!-- closing content div -->
+</div> <!-- closing container div -->
+<footer class="footer">
+    Admin Panel &copy; 2024
+</footer>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const toggleBtn = document.getElementById("toggleBtn");
+    const sidebar = document.getElementById("sidebar");
+    const content = document.getElementById("content");
+
+    toggleBtn.addEventListener("click", function() {
+        sidebar.classList.toggle("open");
+        content.classList.toggle("open");
+        toggleBtn.classList.toggle("open");
+    });
+
+    // Close sidebar when clicking outside of it
+    document.addEventListener("click", function(event) {
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        const isClickInsideToggleBtn = toggleBtn.contains(event.target);
+        if (!isClickInsideSidebar && !isClickInsideToggleBtn) {
+            sidebar.classList.remove("open");
+            content.classList.remove("open");
+            toggleBtn.classList.remove("open");
+        }
+    });
+    
+
+// Call fetchAvailableStores() function initially to fetch and populate available stores
+
+    // Function to show a section by its ID
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.section');
+        const sectionHeaders = document.querySelectorAll('.section-header');
+
+        sections.forEach(section => {
+            section.style.display = 'none';
+        });
+
+        sectionHeaders.forEach(header => {
+            header.style.display = 'none';
+        });
+
+        const section = document.querySelector(`.section#${sectionId}`);
+        const sectionHeader = section.getElementsByClassName('section-header')[0];
+        section.style.display = 'block';
+        sectionHeader.style.display = 'block';
+
+        // Remove the 'active' class from all sidebar items
+        const sidebarNavItems = document.querySelectorAll(".sidebar-nav-item");
+        sidebarNavItems.forEach(item => {
+            item.classList.remove("active");
+        });
+
+        // Add the 'active' class to the clicked sidebar item
+        const clickedNavItem = document.getElementById(sectionId);
+        clickedNavItem.classList.add("active");
+    }
+
+   
+    // Show the sections when corresponding sidebar items are clicked
+   // Show the sections when corresponding sidebar items are clicked
+const sidebarNavItems = document.querySelectorAll(".sidebar-nav-item");
+sidebarNavItems.forEach(function(item) {
+    item.addEventListener("click", function() {
+        const sectionId = item.getAttribute("id").toLowerCase();
+        showSection(sectionId);
+        sidebar.classList.remove("open");
+        content.classList.remove("open");
+        toggleBtn.classList.remove("open");
+        
+        if (sectionId === 'managestores') {
+            fetchStores();
+            // Make stores table visible
+            document.getElementById('availableStores').style.display = 'block';    
+        }
+        if(sectionId === 'seeallorders'){
+            // document.getElementById('availableStores').style.display = 'block';  
+            fetchOrders();
+        }
+        if(sectionId === 'adddeleteproducts'){
+            // Ensure the ID of the select element matches
+            fetchAvailableStores();
+            fetchProducts();
+        }
+    });
+});
+
+
+    // Show the homepage by default
+    showSection('homepage');
+});
+ // Fetch and display available stores
+ function fetchStores() {
+    fetch('http://localhost:3000/stores')
+        .then(response => response.json())
+        .then(data => {
+            const storesTableBody = document.getElementById('storesTableBody');
+            storesTableBody.innerHTML = '';
+            data.forEach(store => {if(store.Active==1){
+                const row = `<tr>
+                                <td>${store.StoreID}</td>
+                                <td>${store.StoreName}</td>
+                                <td>${store.ManagerID}</td>
+                                <td>${store.ManagerName}</td>
+                                <td>
+                                    ${store.StoreRating}
+                                <td>
+                                    <button onclick="deleteStore(${store.StoreID})">Delete</button>
+                                </td>
+                            </tr>`;
+                storesTableBody.innerHTML += row;
+                        }
+            });
+        })
+        .catch(error => console.error('Error fetching stores:', error));
+}
+// Function to add a new store
+function addStore() {
+    const form = document.getElementById('addStoreFormElement');
+    const formData = new FormData(form);
+
+    fetch('/addstore', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to add store');
+        }
+        alert('Store added successfully');
+        form.reset();
+        fetchStores();
+    })
+    .catch(error => console.error('Error adding store:', error));
+}
+
+// Function to delete a store
+function deleteStore(storeID) {
+    const formData = {
+        storeID: storeID
+    };
+
+    fetch('http://localhost:3000/deletestore', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Set the Content-Type header to indicate JSON data
+        },
+        body: JSON.stringify(formData) // Stringify the formData object
+    })
+    .then(response => {
+        if (!response.ok) {
+            console.log(response);
+            throw new Error('Failed to delete store');
+        }
+        alert('Store deleted successfully');
+        fetchStores();
+    })
+    .catch(error => console.error('Error deleting store:', error));
+}
+
+
+// Function to update store details
+function updateStore() {
+    const form = document.getElementById('updateStoreFormElement');
+    const formData = new FormData(form);
+
+    fetch('/updatestore', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update store');
+        }
+        alert('Store updated successfully');
+        form.reset();
+        fetchStores();
+    })
+    .catch(error => console.error('Error updating store:', error));
+}
+// Global variables to keep track of current page and total number of orders
+let currentPage = 1;
+let ordersPerPage = 20;
+let totalOrders = 0;
+// Create a table element
+const table = document.createElement('table');
+table.classList.add('order-table');
+
+// Create table header row
+const headerRow = document.createElement('tr');
+headerRow.innerHTML = `
+    <th>Order ID</th>
+    <th>Customer ID</th>
+    <th>Store ID</th>
+    <th>Product ID</th>
+    <th>Tracking ID</th>
+    <th>Delivery Status</th>
+    <th>Expected Delivery Time</th>
+    <th>Number Of Products</th>
+    <th>Date Time Of Order Placed</th>
+    <th>Mode Of Payment</th>
+    <th>Address ID</th>
+    <th>Has Feedback</th>
+`;
+table.appendChild(headerRow);
+// Function to fetch and display orders based on pagination
+function fetchOrders() {
+    const orderList = document.getElementById('orderList');
+    const pagination = document.getElementById('pagination');
+
+    // Calculate the starting index for fetching orders
+    const startIndex = (currentPage - 1) * ordersPerPage;
+
+    // Fetch orders from the server with pagination parameters
+    fetch(`http://localhost:3000/allOrders?_page=${currentPage}&_limit=${ordersPerPage}`)
+        .then(response => {
+            // Get total number of orders from response headers
+            totalOrders = Number(response.headers.get('X-Total-Count'));
+            // Update pagination
+            updatePagination(pagination);
+            return response.json();
+        })
+        .then(data => {
+            // Clear the order list before populating new orders
+            orderList.innerHTML = '';
+            // Populate orders in the order list
+            data.forEach(order => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${order.OrderID}</td>
+        <td>${order.CustomerID}</td>
+        <td>${order.StoreID}</td>
+        <td>${order.ProductID}</td>
+        <td>${order.TrackingID}</td>
+        <td>${order.DeliveryStatus}</td>
+        <td>${new Date(order.ExpectedDeliveryTime).toLocaleString()}</td>
+        <td>${order.NumberOfProducts}</td>
+        <td>${new Date(order.DateTimeOfOrderPlaced).toLocaleString()}</td>
+        <td>${order.ModeOfPayment}</td>
+        <td>${order.AddressID}</td>
+        <td>${order.HasFeedback ? 'Yes' : 'No'}</td>
+    `;
+    table.appendChild(row);
+});
+
+// Append the table to the orderList container
+orderList.appendChild(table);
+
+        })
+        .catch(error => console.error('Error fetching orders:', error));
+}
+
+// Function to update pagination buttons
+function updatePagination(pagination) {
+    // Calculate total number of pages
+    const totalPages = Math.ceil(totalOrders / ordersPerPage);
+
+    // Clear previous pagination buttons
+    pagination.innerHTML = '';
+
+    // Create and append pagination buttons
+    for (let i = 1; i <= totalPages; i++) {
+        const pageBtn = document.createElement('button');
+        pageBtn.textContent = i;
+        pageBtn.classList.add('page-btn');
+        if (i === currentPage) {
+            pageBtn.classList.add('active');
+        }
+        pageBtn.addEventListener('click', () => {
+            currentPage = i;
+            fetchOrders();
+        });
+        pagination.appendChild(pageBtn);
+    }
+}
+
+// Call fetchOrders() function initially to fetch and display orders
+fetchOrders();
+// Function to fetch and display all products
+function fetchProducts() {
+    fetch('http://localhost:3000/products')
+        .then(response => response.json())
+        .then(products => {
+            const productsTableBody = document.getElementById('productsTableBody');
+            productsTableBody.innerHTML = '';
+            products.forEach(product => {
+                if(product.Active==1){
+                const row = `<tr>
+                                <td>${product.ProductID}</td>
+                                <td>${product.ItemName}</td>
+                                <td>${product.Brand}</td>
+                                <td>${product.Descr}</td>
+                                <td>${product.Price}</td>
+                                <td><button onclick="deleteProduct(${product.ProductID})">Delete</button></td>
+                            </tr>`;
+                productsTableBody.innerHTML += row;
+                        }
+            });
+        })
+        .catch(error => console.error('Error fetching products:', error));
+}
+
+// Function to delete a product
+function deleteProduct(productId) {
+    fetch(`http://localhost:3000/deleteProducts?productId=${productId}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to delete product');
+        }
+        alert('Product deleted successfully');
+        // Refresh product table after deletion
+        fetchProducts();
+    })
+    .catch(error => console.error('Error deleting product:', error));
+}
+// Function to fetch and display available stores as checkboxes
+// Function to fetch and display available stores as checkboxes
+function fetchAvailableStores() {
+    fetch('http://localhost:3000/stores')
+        .then(response => response.json())
+        .then(data => {
+            const checkboxGroup = document.getElementById('availableStores1');
+            checkboxGroup.innerHTML = ''; // Clear previous checkboxes
+            data.forEach(store => {
+                if (store.Active == 1) {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.name = 'availableStores';
+                    checkbox.value = store.StoreID;
+                    checkbox.id = `store_${store.StoreID}`;
+
+                    const label = document.createElement('label');
+                    label.htmlFor = `store_${store.StoreID}`;
+                    label.textContent = `${store.StoreID} - ${store.StoreName}`;
+
+                    // Set CSS display property for checkbox and label to inline-flex
+                    checkbox.style.display = 'inline-flex';
+                    label.style.display = 'inline-flex';
+                    label.style.alignItems = 'center'; // Align label vertically with checkbox
+
+                    const stockInput = document.createElement('input');
+                    stockInput.type = 'number';
+                    stockInput.name = `stock_${store.StoreID}`;
+                    stockInput.placeholder = 'Stock';
+                    stockInput.classList.add('form-control');
+
+                    const discountInput = document.createElement('input');
+                    discountInput.type = 'number';
+                    discountInput.name = `discount_${store.StoreID}`;
+                    discountInput.placeholder = 'Discount %';
+                    discountInput.classList.add('form-control');
+
+                    checkboxGroup.appendChild(checkbox);
+                    checkboxGroup.appendChild(label);
+                    checkboxGroup.appendChild(stockInput);
+                    checkboxGroup.appendChild(discountInput);
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching available stores:', error));
+}
+
+
+
+
+// Call fetchAvailableStores() function initially to fetch and display available stores as checkboxes
+
+
+// Call fetchProducts() function initially to fetch and display products
+fetchProducts();
+
+
+
+
+
+
+// Function to add a new product
+function addProduct() {
+    const form = document.getElementById('addProductFormElement');
+    const formData = new FormData(form);
+
+    // Extract all fields from the form
+    const itemName = formData.get('itemName');
+    const brand = formData.get('brand');
+    const description = formData.get('description');
+    const imageUrl = formData.get('imageUrl');
+    const price = formData.get('price');
+    const productCategory = formData.get('productCategory');
+    const productSubCategory = formData.get('productSubCategory');
+
+    // Extract checked available stores and their stock and discount percentage
+    const availableStores = [];
+    const checkboxes = document.querySelectorAll('input[name="availableStores"]:checked');
+    checkboxes.forEach(checkbox => {
+        const storeId = checkbox.value;
+        const stock = formData.get(`stock_${storeId}`);
+        const discountPercentage = formData.get(`discount_${storeId}`);
+        availableStores.push({
+            StoreID: storeId,
+            Stock: stock,
+            DiscountPercentage: discountPercentage
+        });
+    });
+
+    // Add extracted values to an object
+    const newProduct = {
+        ItemName: itemName,
+        Brand: brand,
+        Descr: description,
+        IMAGEURL: imageUrl,
+        Price: price,
+        ProductCategory: productCategory,
+        ProductSubCategory: productSubCategory,
+        AvailableStores: availableStores
+    };
+
+// Make a POST request to the backend with the new product data
+fetch('http://localhost:3000/InsertProducts', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newProduct)
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Failed to add product');
+    }
+    // Parse the response body as JSON
+    return response.json();
+})
+.then(data => {
+    // Extract productId from response data
+    const { productId } = data;
+
+    // Add productId to newProduct object
+    newProduct.Active = 1;
+    newProduct.ProductID = productId;
+
+    // Call the endpoint to add the product to the store
+    addProductInStore(newProduct);
+
+    // Display success message and reset the form
+    alert('Product added successfully');
+    form.reset();
+
+    // Fetch and display products after adding a new product
+    fetchProducts();
+})
+.catch(error => console.error('Error adding product:', error));
+}
+
+
+function addProductInStore(newProduct) {
+    fetch('http://localhost:3000/add-product-in-store', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newProduct)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to add product to store');
+        }
+        console.log('New product added to store successfully');
+    })
+    .catch(error => console.error('Error adding product to store:', error));
+}
+
+
+
+
+</script>
+</body>
+</html>
